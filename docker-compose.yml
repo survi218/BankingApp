@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # MySQL Service
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: OnlineBanking
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - banking-network
+
+  # BankingApp Service
+  bankingapp:
+    build:
+      context: .
+      dockerfile: Dockerfile # Use the appropriate Dockerfile in your project
+    container_name: bankingapp-container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/OnlineBanking?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - banking-network
+
+networks:
+  banking-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
