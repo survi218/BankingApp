@@ -1,7 +1,7 @@
 # BankingApp
 Banking Application with Primary and Savings account.
 
-# Techncal Stack to develop the app:
+# Technical Stack used to develop this app:
  - Spring-Boot
  - SpringWebMVC
  - Spring-data-jpa
